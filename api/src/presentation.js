@@ -5,9 +5,7 @@ export  function clientController(service){
     const client = Router()
 
     client.get("/clients",async (req,res)=>{
-        const page = parseInt(req.query.page, 10) || 1;
-        const limit = parseInt(req.query.limit, 10) || 20;
-        res.status(200).send(await service.getAllWithPaginator(page,limit) )
+        res.status(200).send(await service.getAll() )
     })
 
     client.post("/clients", async (req,res)=>{
@@ -23,12 +21,13 @@ export  function clientController(service){
 
     })
     client.put("/clients/:id", async(req,res)=>{
-        const {user} = req.body
+        const user = req.body
         const {id} = req.params
         try {
-            await service.update(id,user)
-            res.send("The client has been updated")
+            
+            res.send(await service.update(id,user))
         } catch (error) {
+            console.log(error)
             res.status(400).send("This user does not exist")
         }
         

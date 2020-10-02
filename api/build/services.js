@@ -17,29 +17,9 @@ var ClientService = exports.ClientService = function () {
   }
 
   _createClass(ClientService, [{
-    key: "getAllWithPaginator",
-    value: async function getAllWithPaginator(page, limit) {
-      var pagination = {};
-      var startIndex = (page - 1) * limit;
-      var endIndex = page * limit;
-      var total = await this._repository.getTotal();
-
-      if (endIndex < total) {
-        pagination.next = {
-          page: page + 1,
-          limit: limit
-        };
-      }
-
-      if (startIndex > 0) {
-        pagination.prev = {
-          page: page - 1,
-          limit: limit
-        };
-      }
-
-      pagination.results = (await this._repository.findAll(startIndex, endIndex)).map(this._mapper.fromModelToDTO);
-      return pagination;
+    key: "getAll",
+    value: async function getAll() {
+      return (await this._repository.findAll()).map(this._mapper.fromModelToDTO);
     }
   }, {
     key: "add",
@@ -49,7 +29,7 @@ var ClientService = exports.ClientService = function () {
   }, {
     key: "update",
     value: async function update(id, data) {
-      return this._mapper((await this._repository.updateById(id, data)));
+      return this._mapper.fromModelToDTO((await this._repository.updateById(id, data)));
     }
   }]);
 

@@ -1,0 +1,194 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Fractal API",
+        "description": "Fractal API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "Api Version 1.0"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Client",
+            "description": "Client services"
+        }
+    ],
+    "paths": {
+        "/clients": {
+            "get":{
+                "tags":[
+                    "Client"
+                ],
+                "summary": "Get all clients",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/ClientDTO"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Create a client",
+                "requestBody":{
+                    "description": "Create Client Schema",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/CreateClientDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ClientDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BadRequest"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+        },
+        "/clients/{id}":{
+            "put":{
+                    "parameters":[{
+                        "in":"path",
+                        "name": "id",
+                        "required":true,
+                        "schema":{
+                            "type":"string",
+                            "format":"uuid"
+    
+                        },
+                        "description":"Client ID"
+                    
+                    }],
+                    "responses": {
+                        "200": {
+                            "description": "OK",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/ClientDTO"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description": "Bad Request",
+                            "content": {
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/BadRequest"
+                                    }
+                                }
+                            }
+                        } 
+                    
+    
+                }
+            }
+            
+        }
+       
+
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "BadRequest":{
+                "type": "array",
+                "items":{
+                    "type": "string"
+                }
+            },
+            "CreateClientDTO":{
+                "type":"object",
+                "properties": {
+                    "firstName":{
+                        "type": "string"
+                    },
+                    "lastName":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string",
+                        "format":"email"
+                    },
+                    "phone":{
+                        "type":"string",
+                        "format": "email"
+                    }
+                }
+            },
+            "ClientDTO":{
+                "type": "object",
+                "properties": {
+                    "id":{
+                        "type":"string",
+                        "format":"uuid"
+                    },
+                    "firstName":{
+                        "type": "string"
+                    },
+                    "lastName":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string",
+                        "format":"email"
+                    },
+                    "phone":{
+                        "type":"string"
+
+                    }
+                }
+            }
+        }
+       
+    }
+}

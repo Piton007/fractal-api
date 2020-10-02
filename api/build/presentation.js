@@ -11,9 +11,7 @@ function clientController(service) {
     var client = (0, _express.Router)();
 
     client.get("/clients", async function (req, res) {
-        var page = parseInt(req.query.page, 10) || 1;
-        var limit = parseInt(req.query.limit, 10) || 20;
-        res.status(200).send((await service.getAllWithPaginator(page, limit)));
+        res.status(200).send((await service.getAll()));
     });
 
     client.post("/clients", async function (req, res) {
@@ -27,13 +25,14 @@ function clientController(service) {
         }
     });
     client.put("/clients/:id", async function (req, res) {
-        var user = req.body.user;
+        var user = req.body;
         var id = req.params.id;
 
         try {
-            await service.update(id, user);
-            res.send("The client has been updated");
+
+            res.send((await service.update(id, user)));
         } catch (error) {
+            console.log(error);
             res.status(400).send("This user does not exist");
         }
     });

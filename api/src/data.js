@@ -10,8 +10,8 @@ const clientSchema = new Schema({
 export const User = model('client',clientSchema)
 
 export class MongooseClientRepository {
-    async findAll(startIndex,endIndex){
-        return await User.find().skip(startIndex).limit(endIndex)
+    async findAll(){
+        return await User.find()
     }
     async getTotal(){
         return await User.countDocuments()
@@ -21,7 +21,7 @@ export class MongooseClientRepository {
         return await user.save()
     }
     async updateById(id,user){
-        return await User.findByIdAndUpdate(id,...user)
+        return await User.findByIdAndUpdate(id,user)
     }
 }
 

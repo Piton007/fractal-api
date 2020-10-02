@@ -11,8 +11,6 @@ exports.initDB = initDB;
 
 var _mongoose = require("mongoose");
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var clientSchema = new _mongoose.Schema({
@@ -31,8 +29,8 @@ var MongooseClientRepository = exports.MongooseClientRepository = function () {
 
     _createClass(MongooseClientRepository, [{
         key: "findAll",
-        value: async function findAll(startIndex, endIndex) {
-            return await User.find().skip(startIndex).limit(endIndex);
+        value: async function findAll() {
+            return await User.find();
         }
     }, {
         key: "getTotal",
@@ -53,7 +51,7 @@ var MongooseClientRepository = exports.MongooseClientRepository = function () {
     }, {
         key: "updateById",
         value: async function updateById(id, user) {
-            return await User.findByIdAndUpdate.apply(User, [id].concat(_toConsumableArray(user)));
+            return await User.findByIdAndUpdate(id, user);
         }
     }]);
 
